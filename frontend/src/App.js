@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ProductsTable from './components/ProductsTable';
 import {Navbar, Nav, NavItem, Modal, Button} from "react-bootstrap";
-import AddProductForm from './components/AddProductForm';
+import AddProductModal from './components/AddProductModal';
 import './App.css';
 
 class MagazzinoNavBar extends React.Component{ 
@@ -9,6 +9,9 @@ class MagazzinoNavBar extends React.Component{
         super(props);
         this.plusHandler = (buttonName) =>{
           this.props.plusHandler(buttonName);
+        }
+        this.selectShopHandler = (selectedKey) =>{
+          this.props.selectShopHandler(selectedKey);
         }
       }
 
@@ -19,14 +22,14 @@ class MagazzinoNavBar extends React.Component{
             <a href="#home">Magazzino</a>
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav>
-          <NavItem eventKey={1} href="#">
+        <Nav onSelect={this.selectShopHandler}>
+          <NavItem eventKey={0} href="#">
             Generale
           </NavItem>
-          <NavItem eventKey={2} href="#">
+          <NavItem eventKey={1} href="#">
             Terracina
           </NavItem>
-          <NavItem eventKey={3} href="#">
+          <NavItem eventKey={2} href="#">
             Borgo Hermada
           </NavItem>
         </Nav>
@@ -39,49 +42,13 @@ class MagazzinoNavBar extends React.Component{
       }
 }
 
-
-class AddProductModal extends React.Component{
-  constructor(props){
-    super(props)
-    this.handleClose = (button) => {
-      this.props.hide(button);
-    }
-    this.addProduct = this.addProduct.bind(this);
-  }
-
-  componentDidMount(){
-    
-  }
-
-  addProduct(){
-    
-  }
-
-  render(){
-    return (<div className="static-modal">
-      <Modal show={this.props.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add a product</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <AddProductForm />
-          </Modal.Body>
-
-        <Modal.Footer>
-          <Button onClick={this.handleClose}>Close</Button>
-          <Button bsStyle="primary">Save changes</Button>
-        </Modal.Footer>
-      </Modal>
-    </div>);
-  }
-}
-
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {modalShow: false};
+    this.state = {modalShow: false, shop: 0};
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.selectShopHandler = this.selectShopHandler.bind(this);
   }
   
   showModal(button){
@@ -95,15 +62,20 @@ class App extends Component {
       modalShow: false
     })
   }
+
+  selectShopHandler(selectedKey){
+    this.setState({
+      shop: selectedKey
+    });
+  }
   
   render() {
-    console.log("APP RENDER: "+this.state.modalShow);
     return (
       <div>
       <AddProductModal show={this.state.modalShow} hide={this.hideModal}/>
-      <MagazzinoNavBar plusHandler={this.showModal} />;
+      <MagazzinoNavBar plusHandler={this.showModal} selectShopHandler={this.selectShopHandler}/>;
       <div className="container">
-       <ProductsTable limit="100"/>
+       <ProductsTable limit="100" shop={this.state.shop}/>
       </div>
       </div>
     );

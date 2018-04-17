@@ -1,5 +1,5 @@
 Options -Indexes 
-RewriteBase /api
+RewriteBase /magazzino/db/api
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

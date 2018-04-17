@@ -20,7 +20,7 @@ Flight::route('GET /getProducts', function(){
 Flight::route("POST /addProduct", function(){
     if(!(
         isset($_POST["barcode"]) && isset($_POST["name"]) && isset($_POST["description"]) && isset($_POST["initPrice"])
-        && isset($_POST["finalPrice"]) && isset($_POST["brand"])
+        && isset($_POST["finalPrice"]) && isset($_POST["brand"]) && isset($_POST["wholesalePrice"])
     )){
         $barcode = mysql_real_escape_string($_POST["barcode"]);
         $name = mysql_real_escape_string($_POST["name"]);
@@ -28,14 +28,21 @@ Flight::route("POST /addProduct", function(){
         $initPrice = is_numeric($_POST["initPrice"]) ? $_POST["initialPrice"] : 0;
         $finalPrice = is_numeric($_POST["finalPrice"]) ? $_POST["finalPrice"] : 0;
         $brandCode = is_numeric($_POST["brand"]) ? $_POST["brandCode"] : 1; //Default brand
-        if($db -> addProduct($name, $description, $initPrice, $finalPrice, $brandCode, $barcode)){
-
+        $wholesalePrice = is_numeric($_POST["wholesalePrice"]);
+        $shop1 = is_numeric($_POST["shop1"]);
+        $shop2 = is_numeric($_POST["shop2"]);
+        if($db -> addProduct($name, $description, $initPrice, $wholesalePrice, $finalPrice, 
+                                $brandCode, $barcode, $shop1, $shop2)){
+            echo "OK";
         }else{
-            
+            Flight::error("Cannot add products");
         }
     }
+});
 
-
+Flight::route("GET /getBrands", function(){
+    $db = Flight::get('db');
+    return Flight::json($db->getBrands());
 });
 
 Flight::start();

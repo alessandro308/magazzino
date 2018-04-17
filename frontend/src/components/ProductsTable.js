@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Table} from 'react-bootstrap';
 
 const TableRow = ({row, i}) => (
@@ -15,23 +15,20 @@ const TableRow = ({row, i}) => (
 );
 
 class ProductsTable extends React.Component{
-    constructor(maxRow, city){
-        super();
-        var shop;
-        if(typeof city === 'undefined')
-            shop = "*";
-        else
-            shop = city;
-
-        this.state = {shop: city, limit: 100, products: [], isLoaded: false};
+    constructor(props){
+        super(props);
+        this.state = {limit: 100, products: [], isLoaded: false};
     }
 
     componentDidMount() {
-        fetch("http://www.parrucchieriestetiste.it/magazzino/db/api/getProducts?start=0&end="+this.state.limit)
+        if(this.state.city != 0)
+            var url = `http://www.parrucchieriestetiste.it/magazzino/db/api/getProducts?start=0&end=${this.state.limit}&city=${this.state.city}`;
+        else
+            var url = "http://www.parrucchieriestetiste.it/magazzino/db/api/getProducts?start=0&end="+this.state.limit;
+        fetch(url)
         .then(res => res.json())
         .then(
             (result) => {
-
                 this.setState(
                     {
                         products: result,
@@ -52,18 +49,34 @@ class ProductsTable extends React.Component{
 
     render(){
         if(this.state.isLoaded){
+            if(this.props.shop == 0){
+                var tr = <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Brand</th>
+                            <th>Barcode</th>
+                            <th>Initial Price</th>
+                            <th>Wholesale Price</th>
+                            <th>Final Price</th>
+                            <th>Shop 1</th>
+                            <th>Shop 2</th>
+                        </tr>
+            }else{
+                var tr = <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Brand</th>
+                            <th>Barcode</th>
+                            <th>Initial Price</th>
+                            <th>Wholesale Price</th>
+                            <th>Final Price</th>
+                        </tr>
+            }
             var table = (<Table striped bordered condensed hover>
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Brand</th>
-                                    <th>Barcode</th>
-                                    <th>Price</th>
-                                    <th>Price</th>
-                                    <th>Price</th>
-                                </tr>
+                                {tr}
                             </thead>
                             <tbody>
                                 {

@@ -16,11 +16,17 @@ class Database extends mysqli{
     }
 
     function getProducts(){
-        $query = "SELECT p.name, p.description, p.initialPrice, p.finalPrice, p.barcode, b.name AS brand
+        $query = "SELECT p.name, p.description, p.initialPrice,p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand
                     FROM products as p, brands as b
                    WHERE p.brand = b.id
                 ORDER BY p.name";
     
+        return $this -> queryJSON($query);
+    }
+
+    function getBrands(){
+        $query = "SELECT *
+                    FROM brands";
         return $this -> queryJSON($query);
     }
 
@@ -51,8 +57,6 @@ class Database extends mysqli{
             INSERT INTO products ('name', 'description', 'initialPrice', 'finalPrice', 'brand', 'barcode')
             VALUES ($name, $description, $initialPrice, $finalPrice, $brand, $barcode);
         */
-
-        return true;
     }
 
     function editProduct($id, $newValues){
