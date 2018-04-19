@@ -74,7 +74,7 @@ class ProductsTable extends React.Component{
                             <th>Final Price</th>
                         </tr>
             }
-            var table = (<Table striped bordered condensed hover>
+            return (<Table id="mainTable" striped bordered condensed hover>
                             <thead>
                                 {tr}
                             </thead>
@@ -86,7 +86,6 @@ class ProductsTable extends React.Component{
                                 }
                             </tbody>
                         </Table>);
-            return table;
         } else{
             return <h1>Loading data...</h1>;
         } 

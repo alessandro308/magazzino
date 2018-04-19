@@ -16,11 +16,20 @@ class Database extends mysqli{
     }
 
     function getProducts(){
-        $query = "SELECT p.name, p.description, p.initialPrice,p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand
+        $query = "SELECT p.name, p.description, p.initialPrice,p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
                     FROM products as p, brands as b
                    WHERE p.brand = b.id
                 ORDER BY p.name";
     
+        return $this -> queryJSON($query);
+    }
+
+    function getProduct($barcode){
+        $query = "SELECT p.name, p.description, p.initialPrice,p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products as p, brands as b
+                   WHERE p.brand = b.id && p.barcode = '$barcode'
+                ORDER BY p.name";
+
         return $this -> queryJSON($query);
     }
 
@@ -30,15 +39,24 @@ class Database extends mysqli{
         return $this -> queryJSON($query);
     }
 
-    function getProductsRange($start, $end){
-        $query = "SELECT p.name, p.description, p.initialPrice, p.finalPrice, p.barcode, b.name AS brand
-                    FROM products p, brand b
+    function getProductsRange($start, $end, $sortedBy, $filtered){
+        if($sortedBy == null){
+            $sortedBy = "p.name";
+        }
+        
+        $diff = $end-$start;
+        $query = "SELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
                    WHERE p.brand = b.id
-                ORDER BY p.name
-                   LIMIT $start OFFSET $end-$start";
+                ORDER BY $sortedBy
+                   LIMIT $diff OFFSET $start";
         return $this -> queryJSON($query);
     }
 
+    function getProductsCount(){
+        $query = "SELECT COUNT(*) AS num FROM products;";
+        return $this->queryJSON($query);
+    }
     function search($query){
         /*
             SELECT p.name, p.description, p.initialPrice, p.finalPrice, p.barcode, b.name
@@ -52,11 +70,11 @@ class Database extends mysqli{
 
     }
 
-    function addProduct($name, $description, $initialPrice, $finalPrice, $brand, $barcode){
-        /*
-            INSERT INTO products ('name', 'description', 'initialPrice', 'finalPrice', 'brand', 'barcode')
-            VALUES ($name, $description, $initialPrice, $finalPrice, $brand, $barcode);
-        */
+    function addProduct($name, $description, $initialPrice, $wholesalePrice, $finalPrice, $brand, $barcode, $shop1, $shop2){
+        
+        $query = "INSERT INTO products (name, description, initialPrice, wholesalePrice, finalPrice, brand, barcode, shop1, shop2)
+            VALUES ('$name', '$description', $initialPrice, $wholesalePrice, $finalPrice, $brand, '$barcode', $shop1, $shop2)";
+        return $this -> real_query($query);
     }
 
     function editProduct($id, $newValues){

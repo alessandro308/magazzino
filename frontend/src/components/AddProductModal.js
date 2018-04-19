@@ -13,9 +13,10 @@ class AddProductModal extends React.Component{
         initialPrice: 0,
         finalPrice: 0,
         wholesalePrice: 0,
-        numberShop1: 0,
-        numberShop2: 0,
-        barcode: "000 000 000 000"
+        shop1: 0,
+        shop2: 0,
+        barcode: "",
+        checkedExistence: false
       }
 
       this.handleClose = (button) => {
@@ -23,13 +24,50 @@ class AddProductModal extends React.Component{
       }
       this.addProductHandler = this.addProductHandler.bind(this);
       this.handleFormChange = this.handleFormChange.bind(this);
+      this.checkValue = this.checkValue.bind(this);
+    }
+
+    checkValue (barcode){
+      fetch(`https://www.parrucchieriestetiste.it/magazzino/db/api/getProduct?barcode=${barcode}`)
+      .then(
+        res => {
+          if(res.status === 200){
+            return res.json();
+          } else {
+            throw new Error("");
+          }
+        }
+      ).then(
+        response => {
+          const res = response[0];
+          this.setState(
+            {
+              name: res["name"],
+              description: res["description"],
+              initialPrice: res["initialPrice"],
+              finalPrice: res["finalPrice"],
+              wholesalePrice: res["wholesalePrice"],
+              shop1: res["shop1"],
+              shop2: res["shop2"],
+              barcode: res["barcode"],
+              checkedExistence: true
+            }
+          )
+
+        }
+      ).catch( e => {});
     }
 
     handleFormChange(e) {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-  
+        if(name === "barcode"){
+          this.setState({
+            checkedExistence: false
+          });
+          this.checkValue(value);
+        }
         this.setState(
             {
                 [name]: value
@@ -42,9 +80,8 @@ class AddProductModal extends React.Component{
           waitingResponse: true
         }
       )
-      console.log("SENDING DATA");
-      var r = new XMLHttpRequest();
-      r.onreadystatechange = function(){
+      /*var r = new XMLHttpRequest();
+      r.onreadystatechange = (function(){
         if(r.readyState !== 4 || r.status !== 200){
           this.setState({
             productAdded: false,
@@ -52,16 +89,14 @@ class AddProductModal extends React.Component{
             error: r.error
           })
         } else {
-          this.setState({
-            productAdded: true,
-            addProductResponse: r.response,
-            waitingResponse: false
-          })
+          
         }
-      }
-      r.open("POST", "http://www.parrucchieriestetiste.it/magazzino/db/api/getProducts", true);
+      }).bind(this);
+      r.open("POST", "https://www.parrucchieriestetiste.it/magazzino/db/api/addProduct", true);
       r.setRequestHeader("Content-Type", "application/json");
-      r.send(JSON.stringify({
+      r.send(JSON.stringify());
+      */
+      const payload = {
         name: this.state.name,
         description: this.state.description,
         barcode: this.state.barcode,
@@ -71,7 +106,22 @@ class AddProductModal extends React.Component{
         shop1: this.state.shop1,
         shop2: this.state.shop2,
         brand: this.state.brand
-      }));
+      };
+      const data = new FormData();
+      data.append( "json", JSON.stringify( payload ) );
+
+      fetch("https://www.parrucchieriestetiste.it/magazzino/db/api/addProduct",
+      {
+          method: "POST",
+          body: data
+      })
+      .then(function(data){ 
+          /*this.setState({
+            productAdded: true,
+            addProductResponse: data.response,
+            waitingResponse: false
+          })*/
+      })
     }
   
     render(){
@@ -108,15 +158,15 @@ class AddProductModal extends React.Component{
                 initialPrice={this.state.initialPrice}
                 wholesalePrice={this.state.wholesalePrice}
                 finalPrice={this.state.finalPrice}
-                shop1={this.state.numberShop1}
-                shop2={this.state.numberShop2}
+                shop1={this.state.shop1}
+                shop2={this.state.shop2}
                 barcode={this.state.barcode}
               />
             </Modal.Body>
   
           <Modal.Footer>
             <Button onClick={this.handleClose}>Close</Button>
-            <Button bsStyle="primary">Add Product</Button>
+            <Button bsStyle="primary" onClick={this.addProductHandler}>Add Product</Button>
           </Modal.Footer>
         </Modal>
       </div>);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ProductsTable from './components/ProductsTable';
-import {Navbar, Nav, NavItem, Modal, Button} from "react-bootstrap";
+import SortableProductsTable from './components/SortableProductsTable';
+import {Navbar, Nav, NavItem} from "react-bootstrap";
 import AddProductModal from './components/AddProductModal';
 import './App.css';
 
@@ -16,7 +16,7 @@ class MagazzinoNavBar extends React.Component{
       }
 
       render(){
-      return (<Navbar>
+      return (<Navbar fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
             <a href="#home">Magazzino</a>
@@ -75,7 +75,7 @@ class App extends Component {
       <AddProductModal show={this.state.modalShow} hide={this.hideModal}/>
       <MagazzinoNavBar plusHandler={this.showModal} selectShopHandler={this.selectShopHandler}/>;
       <div className="container">
-       <ProductsTable limit="100" shop={this.state.shop}/>
+       <SortableProductsTable limit="100" shop={this.state.shop}/>
       </div>
       </div>
     );
