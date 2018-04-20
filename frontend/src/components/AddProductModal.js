@@ -16,6 +16,7 @@ class AddProductModal extends React.Component{
         shop1: 0,
         shop2: 0,
         barcode: "",
+        brand: 0,
         checkedExistence: false
       }
 
@@ -28,7 +29,7 @@ class AddProductModal extends React.Component{
     }
 
     checkValue (barcode){
-      fetch(`https://www.parrucchieriestetiste.it/magazzino/db/api/getProduct?barcode=${barcode}`)
+      fetch(`http://localhost:8888/api/getProduct?barcode=${barcode}`)
       .then(
         res => {
           if(res.status === 200){
@@ -50,7 +51,8 @@ class AddProductModal extends React.Component{
               shop1: res["shop1"],
               shop2: res["shop2"],
               barcode: res["barcode"],
-              checkedExistence: true
+              checkedExistence: true,
+              brand: res["brand"]
             }
           )
 
@@ -68,34 +70,20 @@ class AddProductModal extends React.Component{
           });
           this.checkValue(value);
         }
+        console.log(target.name);
         this.setState(
             {
                 [name]: value
             }
         )
     }
+
     addProductHandler(e){
       this.setState(
         {
           waitingResponse: true
         }
       )
-      /*var r = new XMLHttpRequest();
-      r.onreadystatechange = (function(){
-        if(r.readyState !== 4 || r.status !== 200){
-          this.setState({
-            productAdded: false,
-            waitingResponse: false,
-            error: r.error
-          })
-        } else {
-          
-        }
-      }).bind(this);
-      r.open("POST", "https://www.parrucchieriestetiste.it/magazzino/db/api/addProduct", true);
-      r.setRequestHeader("Content-Type", "application/json");
-      r.send(JSON.stringify());
-      */
       const payload = {
         name: this.state.name,
         description: this.state.description,
@@ -103,24 +91,30 @@ class AddProductModal extends React.Component{
         initialPrice: this.state.initialPrice,
         finalPrice: this.state.finalPrice,
         wholesalePrice: this.state.wholesalePrice,
+        brand: this.state.brand,
         shop1: this.state.shop1,
-        shop2: this.state.shop2,
-        brand: this.state.brand
+        shop2: this.state.shop2
       };
+
       const data = new FormData();
       data.append( "json", JSON.stringify( payload ) );
-
-      fetch("https://www.parrucchieriestetiste.it/magazzino/db/api/addProduct",
+      fetch("http://localhost:8888/api/addProduct/",
       {
           method: "POST",
-          body: data
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify( payload ),
+          mode: 'cors',
+          cache: 'default'
       })
-      .then(function(data){ 
-          /*this.setState({
+      .then(res => {
+          this.setState({
             productAdded: true,
-            addProductResponse: data.response,
+            addProductResponse: res.response,
             waitingResponse: false
-          })*/
+          })
+      }, fail => {
+        console.log("FETCH FAIL");
+        console.log(fail.response);
       })
     }
   
@@ -131,8 +125,10 @@ class AddProductModal extends React.Component{
                 <strong>Adding product</strong> Sending information to database...
               </Alert>;
       }else{
+        
         if(typeof this.state.productAdded !== "undefined"){
-          if(this.productAdded){
+
+          if(this.state.productAdded){
             al = <Alert bsStyle="success">
                     <strong>Product added</strong>
                   </Alert>;
@@ -161,6 +157,7 @@ class AddProductModal extends React.Component{
                 shop1={this.state.shop1}
                 shop2={this.state.shop2}
                 barcode={this.state.barcode}
+                brand={this.state.brand}
               />
             </Modal.Body>
   

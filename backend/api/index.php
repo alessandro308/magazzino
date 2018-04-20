@@ -3,7 +3,7 @@ require 'flight/Flight.php';
 require '../Database.php';
 
 
-Flight::set('db', new Database("sql.parrucchieriestetiste.it", "parrucch09014", "parr90814", "parrucch09014"));
+Flight::set('db', new Database("localhost", "root", "root", "magazzino"));
 Flight::route('/', function(){
     echo 'hello world!';
 });
@@ -33,11 +33,16 @@ Flight::route("GET /getProduct/", function(){
         Flight::notFound();
 });
 
-Flight::route('POST /addProduct/', function(){
+Flight::route('POST|OPTIONS /addProduct/', function(){
     $db = Flight::get('db');
     //Receive the RAW post data.
     $content = trim(file_get_contents("php://input"));
-    
+
+    $request = Flight::request();
+    if($request->method == "OPTIONS"){
+        echo "ok";
+        return;
+    }
     //Attempt to decode the incoming RAW post data from JSON.
     $_POST = json_decode($content, true);
     if(!(
@@ -55,10 +60,10 @@ Flight::route('POST /addProduct/', function(){
         $shop2 = is_numeric($_POST["shop2"]) ? $_POST["shop2"] : 0;
         $res = $db -> addProduct($name, $description, $initPrice, $wholesalePrice, $finalPrice, 
         $brand, $barcode, $shop1, $shop2);
-        if($res){
+        if($res === true){
             echo "OK";
         }else{
-            Flight::error(new Exception('Cannot add a product'));
+            Flight::error(new Exception($res));
         }
     }
 });

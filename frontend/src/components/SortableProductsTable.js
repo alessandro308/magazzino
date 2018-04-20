@@ -31,7 +31,7 @@ class SortableProductsTable extends React.Component{
             }
         }
         
-        var url = `http://www.parrucchieriestetiste.it/magazzino/db/api/getProducts?start=${page*pageSize}&end=${page*pageSize+pageSize}`;
+        var url = `http://localhost:8888/api/getProducts?start=${page*pageSize}&end=${page*pageSize+pageSize}`;
         if(sorting !== "")
             url += `&sortedBy=${sorting}`;
         if(filtering !== ""){
@@ -67,6 +67,8 @@ class SortableProductsTable extends React.Component{
         // Whenever the table model changes, or the user sorts or changes pages, this method gets called and passed the current table model.
         // You can set the `loading` prop of the table to true to use the built-in one or show you're own loading bar if you want.
         this.setState({ loading: true });
+        console.log(state)
+        console.log(instance)
         // Request the data however you want.  Here, we'll use our mocked service we created earlier
         this.requestData(
           state.pageSize,

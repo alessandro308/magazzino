@@ -49,6 +49,8 @@ class App extends Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.selectShopHandler = this.selectShopHandler.bind(this);
+    this.redraw = this.redraw.bind(this);
+    this.table = React.createRef();
   }
   
   showModal(button){
@@ -60,13 +62,18 @@ class App extends Component {
   hideModal(button){
     this.setState({
       modalShow: false
-    })
+    });
+    this.redraw();
   }
 
   selectShopHandler(selectedKey){
     this.setState({
       shop: selectedKey
     });
+  }
+
+  redraw(){
+    this.forceUpdate();
   }
   
   render() {

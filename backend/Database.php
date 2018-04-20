@@ -5,6 +5,7 @@ class Database extends mysqli{
     }
 
     function queryJSON($query){
+        $myArray = [];
         if($res = $this -> query($query)){
             while($row = $res -> fetch_array(MYSQL_ASSOC)) {
                 $myArray[] = $row;
@@ -71,10 +72,13 @@ class Database extends mysqli{
     }
 
     function addProduct($name, $description, $initialPrice, $wholesalePrice, $finalPrice, $brand, $barcode, $shop1, $shop2){
-        
         $query = "INSERT INTO products (name, description, initialPrice, wholesalePrice, finalPrice, brand, barcode, shop1, shop2)
             VALUES ('$name', '$description', $initialPrice, $wholesalePrice, $finalPrice, $brand, '$barcode', $shop1, $shop2)";
-        return $this -> real_query($query);
+        if($this -> query($query)){
+            return true;
+        }else{
+            return $this -> error;
+        }
     }
 
     function editProduct($id, $newValues){

@@ -23,7 +23,7 @@ class BrandSelector extends React.Component{
   }
 
   componentDidMount() {
-      fetch("http://www.parrucchieriestetiste.it/magazzino/db/api/getBrands")
+      fetch("http://localhost:8888/api/getBrands")
       .then(res => res.json())
       .then(
           (result) => {
@@ -56,7 +56,7 @@ class BrandSelector extends React.Component{
     }
     return (<FormGroup controlId={this.state.id}>
       <ControlLabel>{this.state.label}</ControlLabel>
-      <FormControl componentClass="select" name={this.state.brand} onChange={this.onChange}>
+      <FormControl componentClass="select" name={this.state.name} onChange={this.onChange}>
         {options}
       </FormControl>
     </FormGroup>);
