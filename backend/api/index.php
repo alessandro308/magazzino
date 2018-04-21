@@ -4,6 +4,7 @@ require '../Database.php';
 
 
 Flight::set('db', new Database("localhost", "root", "root", "magazzino"));
+//Flight::set('db', new Database("sql.parrucchieriestetiste.it", "parrucch09014", "parr90814", "parrucch09014"));
 Flight::route('/', function(){
     echo 'hello world!';
 });
@@ -37,6 +38,37 @@ Flight::route("GET /deleteProduct/", function(){
         echo "ok";
     else 
         Flight::notFound();
+});
+
+Flight::route("GET /addBrand/", function(){
+    $db = Flight::get('db');
+    $res = $db -> addBrand($_GET["name"]);
+    if($res)
+        echo "ok";
+    else 
+        Flight::error(new Exception("Cannot add Brand"));
+});
+
+Flight::route("POST|OPTIONS /registerOrder/", function(){
+    $db = Flight::get('db');
+    //Receive the RAW post data.
+    $content = trim(file_get_contents("php://input"));
+
+    $request = Flight::request();
+    if($request->method == "OPTIONS"){
+        echo "ok";
+        return;
+    }
+    //Attempt to decode the incoming RAW post data from JSON.
+    $_POST = json_decode($content, true);
+
+    $shop = $_POST["shop"];
+    $products = $_POST["products"];
+    for($i = 0; $i<count($products); $i++){
+        $barcode = $products[$i]["barcode"];
+        $db -> decrease($barcode, $shop);
+    }
+    echo "ok";
 });
 
 Flight::route('POST|OPTIONS /addProduct/', function(){

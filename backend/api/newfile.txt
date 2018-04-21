@@ -7,4 +7,4 @@ DELETE FROM products
                    WHERE barcode = '113'\nDELETE FROM products
                    WHERE barcode = '114'\nDELETE FROM products
                    WHERE barcode = '128'\nDELETE FROM products
-                   WHERE barcode = '1'\n
+                   WHERE barcode = '1'\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = '1'\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = '1'\n

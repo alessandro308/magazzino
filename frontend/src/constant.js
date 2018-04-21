@@ -1,5 +1,5 @@
+//const BASE_URL="https://www.parrucchieriestetiste.it/magazzino/db"; 
 const BASE_URL="http://localhost:8888";
-
 const locale_string = {
     name: "Nome",
     description : "Descrizione",
@@ -11,7 +11,6 @@ const locale_string = {
     wholesalePrice: "Prezzo all'ingrosso",
     quantity: "Quantità",
     brand: "Marca",
-    add_product: "Aggiungi prodotto",
     delete_product: "Elimina Prodotto",
     change_product: "Aggiorna prodotto",
     add_product: "Aggiungi prodotto",
@@ -31,7 +30,14 @@ const locale_string = {
     products: "Prodotti",
     prices: "Prezzi",
     number_of_element_stored_in_: "Numero di elementi a ",
-    select_a_brand: "Seleziona una marca"
+    select_a_brand: "Seleziona una marca",
+    readBarcode: "Leggi il codice a barre",
+    go_checkout: "Termina il conto",
+    completeOrder: "Completa l'ordine",
+    orderCompleted: "Acquisto completato",
+    getIdClient: "Inserisci il numero della carta, se esiste",
+    add_brand: "Aggiungi marca",
+    brand_added: "Marca aggiunta"
 
 }
 

@@ -37,10 +37,7 @@ class Database extends mysqli{
     function deleteProduct($barcode){
         $query = "DELETE FROM products
                    WHERE barcode = '$barcode'";
-        $myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
-        $txt = $query.'\n';
-        fwrite($myfile, $txt);
-        fclose($myfile);
+        
         return $this -> query($query);
     }
 
@@ -90,22 +87,33 @@ class Database extends mysqli{
         $query = "SELECT COUNT(*) AS num FROM products;";
         return $this->queryJSON($query);
     }
-    function search($query){
-        /*
-            SELECT p.name, p.description, p.initialPrice, p.finalPrice, p.barcode, b.name
-            FROM product p, brand b
-            WHERE p.brand = b.id AND $query
-            ORDER BY p.name
-        */
-    }
-
-    function filter($where_filter){
-
-    }
+    
 
     function addProduct($name, $description, $initialPrice, $wholesalePrice, $finalPrice, $brand, $barcode, $shop1, $shop2){
         $query = "INSERT INTO products (name, description, initialPrice, wholesalePrice, finalPrice, brand, barcode, shop1, shop2)
             VALUES ('$name', '$description', $initialPrice, $wholesalePrice, $finalPrice, $brand, '$barcode', $shop1, $shop2)";
+        if($this -> query($query)){
+            return true;
+        }else{
+            return $this -> error;
+        }
+    }
+
+    function decrease($barcode, $shop){
+        $query = "UPDATE products SET $shop = $shop - 1 WHERE `barcode` = '$barcode'";
+        $myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
+        $txt = $query.'\n';
+        fwrite($myfile, $txt);
+        fclose($myfile);
+        if($this -> query($query)){
+            return true;
+        }else{
+            return $this -> error;
+        }
+    }
+
+    function addBrand($name){
+        $query = "INSERT INTO brands (name) VALUES ('$name')";
         if($this -> query($query)){
             return true;
         }else{

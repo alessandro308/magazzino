@@ -41,3 +41,12 @@ div:focus {
     width: 1200px;
   }
 }
+
+#completeOrder{
+  margin: 0 auto;
+  width: 60%;
+}
+
+.align-right{
+  float: right;
+}

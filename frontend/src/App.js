@@ -6,6 +6,7 @@ import CartComposer from './components/CartComposer';
 import './App.css';
 import "react-table/react-table.css";
 import {BASE_URL, LOCALE_STRING} from './constant';
+import { AddBrandModal } from './components/AddBrandModal';
 
 class MagazzinoNavBar extends React.Component{ 
       constructor(props){
@@ -46,6 +47,9 @@ class MagazzinoNavBar extends React.Component{
             <NavItem eventKey={5} data-key={5} onClick={this.navBarButtonHandler}>
               <span className="glyphicon glyphicon-wrench" data-key={5}></span>
             </NavItem>
+            <NavItem eventKey={8} data-key={8} onClick={this.navBarButtonHandler}>
+              <span className="glyphicon glyphicon-ice-lolly-tasted" data-key={8}></span>
+            </NavItem>
           </Nav>
         </Navbar>);
       }
@@ -54,10 +58,6 @@ class MagazzinoNavBar extends React.Component{
 class App extends Component {
   constructor(props){
     super(props);
-    this.hideModal = this.hideModal.bind(this);
-    this.navBarButtonHandler = this.navBarButtonHandler.bind(this);
-    this.requestData = this.requestData.bind(this);
-    this.fetchData = this.fetchData.bind(this);
     this.state = {table: {
       pageSize: 10,
       page: 0,
@@ -65,6 +65,13 @@ class App extends Component {
       filtered: [],
       loading: true
     }, cartComposer: false, shop: 0};
+
+    this.hideModal = this.hideModal.bind(this);
+    this.navBarButtonHandler = this.navBarButtonHandler.bind(this);
+    this.requestData = this.requestData.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.brandModalCloseHandler = this.brandModalCloseHandler.bind(this);
+    
   }
   
   componentDidMount(){
@@ -79,7 +86,6 @@ class App extends Component {
   }
 
   navBarButtonHandler(selectedKey){
-    console.log(selectedKey);
     selectedKey = parseInt(selectedKey, 10);
     switch(selectedKey){
       case 7:
@@ -95,6 +101,11 @@ class App extends Component {
       case 5: 
         this.setState({
           modalShow: true
+        });
+        break;
+      case 8:
+        this.setState({
+          addBrandModalShow: true
         });
         break;
       default:
@@ -118,6 +129,7 @@ class App extends Component {
       where: filtered
     }
     var url = `${BASE_URL}/api/getProducts?parameters=`+JSON.stringify(payload);
+
     fetch(encodeURI(url))
     .then(res => {
         return res.json();
@@ -158,6 +170,13 @@ class App extends Component {
       );
   }
   
+  brandModalCloseHandler(){
+    this.setState(
+      {
+        addBrandModalShow: false
+      }
+    );
+  }
   render() {
     let cartComposer;
     let table;
@@ -254,6 +273,9 @@ class App extends Component {
                 }
             ]
           };
+          break;
+        default: 
+          break;
       } 
       
       const columns = [
@@ -357,6 +379,7 @@ class App extends Component {
     return (
       <div>
       <AddProductModal show={this.state.modalShow} hide={this.hideModal} />
+      <AddBrandModal show={this.state.addBrandModalShow} handleClose={this.brandModalCloseHandler} />
       <MagazzinoNavBar buttonHandler={this.navBarButtonHandler} selected={this.state.shop}/>;
       <div id="main" className="container">
        {this.state.cartComposer ? cartComposer : table}
