@@ -11,7 +11,7 @@ This project uses `react-table` to organize the data to show in the main page (a
 ### Settings
 The project is divided into two parts:
   - Frontend (Go React!)
-  - Backend (PHP :/)
+  - Backend (PHP, using FlightPHP :/)
 
 In order to set properly all the parts, you have to deploy your API somewhere, then set into `frontend/src/constant.js` the `BASE_URL` and all the strings to locate the project in your language. 
 
