@@ -10,7 +10,7 @@ Flight::route('/', function(){
 
 Flight::route('GET /getProducts/', function(){
     $db = Flight::get('db');
-    $count = $db -> getProductsCount();
+    $count = $db -> getProductsCount(); //TODO: adjust the result w.r.t. filters
     if( isset($_GET["parameters"]) ){
         $par = json_decode($_GET["parameters"], true);
         $res["numberOfItems"] = $count[0]["num"];

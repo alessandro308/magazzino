@@ -1,6 +1,7 @@
 import React from 'react';
 import {Alert, Modal, Button} from 'react-bootstrap';
 import AddProductForm from './AddProductForm';
+import {BASE_URL, LOCALE_STRING} from '../constant';
 
 class AddProductModal extends React.Component{
     constructor(props){
@@ -24,7 +25,7 @@ class AddProductModal extends React.Component{
         this.props.hide(button);
       }
       this.deleteButtonHandler = (button) =>{
-        fetch(`http://localhost:8888/api/deleteProduct?barcode=${this.state.barcode}`)
+        fetch(`${BASE_URL}/api/deleteProduct?barcode=${this.state.barcode}`)
         .then(
           (res => {
             if(res.status === 4 || res.status === 200){
@@ -58,7 +59,7 @@ class AddProductModal extends React.Component{
     }
 
     checkValue (barcode){
-      fetch(`http://localhost:8888/api/getProduct?barcode=${barcode}`)
+      fetch(`${BASE_URL}/api/getProduct?barcode=${barcode}`)
       .then(
         res => {
           if(res.status === 200){
@@ -129,9 +130,9 @@ class AddProductModal extends React.Component{
 
       const data = new FormData();
       data.append( "json", JSON.stringify( payload ) );
-      var url = "http://localhost:8888/api/addProduct";
+      var url = BASE_URL+"/api/addProduct";
       if(this.state.barcodeExists){
-        url = "http://localhost:8888/api/editProduct";
+        url = BASE_URL+"/api/editProduct";
       }
       fetch(url,
       {
@@ -163,22 +164,22 @@ class AddProductModal extends React.Component{
       var al;
       if(this.state.waitingResponse){
         al = <Alert bsStyle="warning">
-                <strong>Adding product</strong> Sending information to database...
+                <strong>{LOCALE_STRING.adding_product}</strong> Sending information to database...
               </Alert>;
       }else{
         if(typeof this.state.actionExecuted !== "undefined"){
           if(this.state.actionExecuted === "deleted"){
             al = <Alert bsStyle="success">
-                    <strong>Product deleted</strong>
+                    <strong>{LOCALE_STRING.product_deleted}</strong>
                   </Alert>;
           }else{
             if(this.state.actionExecuted){
               al = <Alert bsStyle="success">
-                      <strong>Product {this.state.barcodeExists ? "changed" : "added" }</strong>
+                      <strong>{this.state.barcodeExists ? LOCALE_STRING.product_updated : LOCALE_STRING.product_added }</strong>
                     </Alert>;
             }else{
               al = <Alert bsStyle="danger">
-                    <strong>Error</strong> {this.state.error}
+                    <strong>{LOCALE_STRING.error}</strong> {this.state.error}
                   </Alert>;
             }
           }
@@ -192,7 +193,7 @@ class AddProductModal extends React.Component{
       return (<div className="static-modal">
         <Modal show={this.props.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>{this.state.barcodeExists ? "Edit the product" : "Add a product"}</Modal.Title>
+              <Modal.Title>{this.state.barcodeExists ? LOCALE_STRING.change_product : LOCALE_STRING.add_product}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               
@@ -215,7 +216,7 @@ class AddProductModal extends React.Component{
           <Modal.Footer>
             <Button onClick={this.handleClose}>Close</Button>
             {deleteButton}
-            <Button bsStyle={this.state.barcodeExists ? "warning" : "primary"} onClick={this.addProductHandler}>{this.state.barcodeExists ? "Edit" : "Add"} Product</Button>
+            <Button bsStyle={this.state.barcodeExists ? "warning" : "primary"} onClick={this.addProductHandler}>{this.state.barcodeExists ? LOCALE_STRING.change_product: LOCALE_STRING.add_product}</Button>
           </Modal.Footer>
         </Modal>
       </div>);

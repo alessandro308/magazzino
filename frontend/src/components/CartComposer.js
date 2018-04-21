@@ -1,6 +1,6 @@
 import React from 'react';
 import {Panel, FormControl, Table, FormGroup} from 'react-bootstrap';
-
+import {BASE_URL, LOCALE_STRING} from '../constant';
 class CartComposer extends React.Component{
     constructor(props){
         super(props);
@@ -17,7 +17,7 @@ class CartComposer extends React.Component{
     }
 
     getProduct(barcode){
-        fetch(`http://localhost:8888/api/getProduct?barcode=${barcode}`)
+        fetch(`${BASE_URL}/api/getProduct?barcode=${barcode}`)
       .then(
         res => {
           if(res.status === 200){
@@ -53,16 +53,16 @@ class CartComposer extends React.Component{
     render(){
         return (<Panel bsStyle="success">
         <Panel.Heading>
-          <Panel.Title componentClass="h3">Cart - At {this.props.shop === 2 ? "Borgo Hermada": "Terracina"} </Panel.Title>
+          <Panel.Title componentClass="h3">{LOCALE_STRING.cart_store_at} {this.props.shop === 2 ? LOCALE_STRING.shop2: LOCALE_STRING.shop1} </Panel.Title>
         </Panel.Heading>
         <Panel.Body>
             <Table responsive>
                 <thead>
                     <tr>
                     <th>#</th>
-                    <th>Barcode</th>
-                    <th>Description</th>
-                    <th>Price</th>
+                    <th>{LOCALE_STRING.barcode}</th>
+                    <th>{LOCALE_STRING.description}</th>
+                    <th>{LOCALE_STRING.price}</th>
                     </tr>
                 </thead>
                 <tbody>

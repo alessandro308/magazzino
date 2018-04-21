@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
+import {BASE_URL, LOCALE_STRING} from '../constant';
 
 function FieldGroup({ id, label, help, ...props }) {
     return (
@@ -23,7 +24,7 @@ class BrandSelector extends React.Component{
   }
 
   componentDidMount() {
-      fetch("http://localhost:8888/api/getBrands")
+      fetch(BASE_URL+"/api/getBrands")
       .then(res => res.json())
       .then(
           (result) => {
@@ -79,7 +80,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="barcode"
               type="text"
-              label="Barcode"
+              label={LOCALE_STRING.barcode}
               placeholder="000 000 000 000"
               name="barcode"
               value={this.props.barcode}
@@ -88,7 +89,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="name"
               type="text"
-              label="Name"
+              label={LOCALE_STRING.name}
               name="name"
               placeholder="e.g. Shampoo"
               value={this.props.name}
@@ -97,7 +98,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="description"
               type="text"
-              label="Description"
+              label={LOCALE_STRING.description}
               name="description"
               placeholder="e.g. A beautiful Shampoo"
               value={this.props.description}
@@ -106,7 +107,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="initialPrice"
               type="number"
-              label="Purchase Price (€)"
+              label={LOCALE_STRING.initialPrice+" (€)"}
               placeholder="0.00"
               name="initialPrice"
               value={this.props.initialPrice}
@@ -115,7 +116,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="wholesalePrice"
               type="number"
-              label="Wholesale Price (€)"
+              label={LOCALE_STRING.wholesalePrice+" (€)"}
               name="wholesalePrice"
               placeholder="0.00"
               value={this.props.wholesalePrice}
@@ -124,7 +125,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="salePrice"
               type="number"
-              label="Sale Price (€)"
+              label={LOCALE_STRING.finalPrice+" (€)"}
               name="finalPrice"
               placeholder="0.00"
               value={this.props.finalPrice}
@@ -133,7 +134,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="shop1"
               type="number"
-              label="Number of item stored in Shop1"
+              label={LOCALE_STRING.number_of_element_stored_in_+LOCALE_STRING.shop1}
               placeholder="0"
               name="shop1"
               value={this.props.shop1}
@@ -142,7 +143,7 @@ class AddProductForm extends React.Component {
             <FieldGroup
               id="shop2"
               type="number"
-              label="Number of item stored in Shop2"
+              label={LOCALE_STRING.number_of_element_stored_in_+LOCALE_STRING.shop2}
               placeholder="0"
               name="shop2"
               value={this.props.shop2}
@@ -151,7 +152,7 @@ class AddProductForm extends React.Component {
             <BrandSelector 
               onChange={this.handleChange} 
               name="brand"
-              label="Select a brand"
+              label={LOCALE_STRING.select_a_brand}
               id="brand"
               selected={this.props.brand}
               />

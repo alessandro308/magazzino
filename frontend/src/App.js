@@ -5,7 +5,7 @@ import AddProductModal from './components/AddProductModal';
 import CartComposer from './components/CartComposer';
 import './App.css';
 import "react-table/react-table.css";
-import {BASE_URL} from './constant';
+import {BASE_URL, LOCALE_STRING} from './constant';
 
 class MagazzinoNavBar extends React.Component{ 
       constructor(props){
@@ -24,13 +24,13 @@ class MagazzinoNavBar extends React.Component{
           </Navbar.Header>
           <Nav>
             <NavItem eventKey={0} data-key={0} onClick={this.navBarButtonHandler}>
-              {this.props.selected === 0 ? <strong>Generale</strong> : "Generale"}
+              {this.props.selected === 0 ? <strong>{LOCALE_STRING.general}</strong> : "Generale"}
             </NavItem>
             <NavItem eventKey={1} data-key={1} onClick={this.navBarButtonHandler}>
-              {this.props.selected === 1 ? <strong>Terracina</strong> : "Terracina"}
+              {this.props.selected === 1 ? <strong>{LOCALE_STRING.shop1}</strong> : "Terracina"}
             </NavItem>
             <NavItem eventKey={2} data-key={2} onClick={this.navBarButtonHandler} >
-              {this.props.selected === 2 ? <strong>Borgo Hermada</strong> : "Borgo Hermada"}
+              {this.props.selected === 2 ? <strong>{LOCALE_STRING.shop2}</strong> : "Borgo Hermada"}
             </NavItem>
           </Nav>
           <Nav pullRight>
@@ -117,27 +117,7 @@ class App extends Component {
       orderBy: sorted,
       where: filtered
     }
-    /*var sorting = "";
-    if(typeof sorted !== "undefined" && sorted.length){
-        for(let i = 0; i<sorted.length; i++){
-            if(i !== 0){
-                sorting += " AND ";
-            }
-            sorting += `p.${sorted[i].id}}`;
-        }
-    }
-
-    var filtering = "";
-    if(typeof filtered !== "undefined" && filtered.length){
-        for(let i = 0; i<filtered.length; i++){
-            if(i!==0){
-                filtering += " AND ";
-            }
-            const id = filtered[i].id;
-            filtering += `${id}=${filtered[i].value}`;
-        }
-    }*/
-    var url = `http://localhost:8888/api/getProducts?parameters=`+JSON.stringify(payload);
+    var url = `${BASE_URL}/api/getProducts?parameters=`+JSON.stringify(payload);
     fetch(encodeURI(url))
     .then(res => {
         return res.json();
@@ -188,10 +168,10 @@ class App extends Component {
       switch(this.state.shop){
         case 0:
           selectedShop = {
-            Header: "Avaiability",
+            Header: LOCALE_STRING.avaiability,
             columns: [
                 {
-                Header: "Shop1",
+                Header: LOCALE_STRING.shop1,
                 accessor: "shop1",
                 filterMethod: (filter, row) => {
                   return true;
@@ -202,13 +182,13 @@ class App extends Component {
                         style={{ width: "100%" }}
                         value={filter ? filter.value : "all"}
                         >
-                        <option value="all">Show All</option>
-                        <option value="NOT 0">Avaialable</option>
-                        <option value="0">Out of stock</option>
+                        <option value="all">{LOCALE_STRING.show_all}</option>
+                        <option value="NOT 0">{LOCALE_STRING.availables}</option>
+                        <option value="0">{LOCALE_STRING.out_of_stock}</option>
                     </select>
                 },
                 {
-                Header: "Shop2",
+                Header: LOCALE_STRING.shop2,
                 accessor: "shop2",
                 filterMethod: (filter, row) => {
                     return true;
@@ -219,9 +199,9 @@ class App extends Component {
                     style={{ width: "100%" }}
                     value={filter ? filter.value : "all"}
                     >
-                    <option value="all">Show All</option>
-                    <option value="NOT 0">Avaialable</option>
-                    <option value="0">Out of stock</option>
+                    <option value="all">{LOCALE_STRING.show_all}</option>
+                    <option value="NOT 0">{LOCALE_STRING.availables}</option>
+                    <option value="0">{LOCALE_STRING.out_of_stock}</option>
                     </select>
                 }
             ]
@@ -229,10 +209,10 @@ class App extends Component {
           break;
         case 1:
           selectedShop = {
-            Header: "Avaiability",
+            Header: LOCALE_STRING.shop1,
             columns: [
                 {
-                Header: "Shop1",
+                Header: LOCALE_STRING.shop1,
                 accessor: "shop1",
                 filterMethod: (filter, row) => {
                   return true;
@@ -243,9 +223,9 @@ class App extends Component {
                         style={{ width: "100%" }}
                         value={filter ? filter.value : "all"}
                         >
-                        <option value="all">Show All</option>
-                        <option value="NOT 0">Avaialable</option>
-                        <option value="0">Out of stock</option>
+                        <option value="all">{LOCALE_STRING.show_all}</option>
+                        <option value="NOT 0">{LOCALE_STRING.availables}</option>
+                        <option value="0">{LOCALE_STRING.out_of_stock}</option>
                     </select>
                 }
             ]
@@ -253,10 +233,10 @@ class App extends Component {
           break;
         case 2:
           selectedShop = {
-            Header: "Avaiability",
+            Header: LOCALE_STRING.shop2,
             columns: [
                 {
-                Header: "Shop2",
+                Header: LOCALE_STRING.shop2,
                 accessor: "shop2",
                 filterMethod: (filter, row) => {
                     return true;
@@ -267,9 +247,9 @@ class App extends Component {
                     style={{ width: "100%" }}
                     value={filter ? filter.value : "all"}
                     >
-                    <option value="all">Show All</option>
-                    <option value="NOT 0">Avaialable</option>
-                    <option value="0">Out of stock</option>
+                    <option value="all">{LOCALE_STRING.show_all}</option>
+                    <option value="NOT 0">{LOCALE_STRING.availables}</option>
+                    <option value="0">{LOCALE_STRING.out_of_stock}</option>
                     </select>
                 }
             ]
@@ -278,22 +258,22 @@ class App extends Component {
       
       const columns = [
                           {
-                          Header: "Product",
+                          Header: LOCALE_STRING.products,
                           columns: [
                               {
-                              Header: "Barcode",
+                              Header: LOCALE_STRING.barcode,
                               accessor: "barcode",
                               filterMethod: (filter, row) =>
                                   row[filter.id].startsWith(filter.value)
                               },
                               {
-                              Header: "Name",
+                              Header: LOCALE_STRING.name,
                               accessor: "name",
                               filterMethod: (filter, row) =>
                                   row[filter.id].includes(filter.value)
                               },
                               {
-                              Header: "Description",
+                              Header: LOCALE_STRING.description,
                               id: "description",
                               accessor: d => d.description,
                               filterMethod: (filter, row) =>
@@ -302,27 +282,27 @@ class App extends Component {
                           ]
                           },
                           {
-                          Header: "Prices",
+                          Header: LOCALE_STRING.prices,
                           columns: [
                               {
-                              Header: "Initial Price",
+                              Header: LOCALE_STRING.initialPrice,
                               accessor: "initialPrice"
                               },
                               {
-                              Header: "Wholesale Price",
+                              Header: LOCALE_STRING.wholesalePrice,
                               accessor: "wholesalePrice"
                               },
                               {
-                              Header: "Final Price",
+                              Header: LOCALE_STRING.finalPrice,
                               accessor: "finalPrice"
                               }
                           ]
                           },
                           {
-                          Header: 'Brand',
+                          Header: LOCALE_STRING.brand,
                           columns: [
                               {
-                              Header: "Brand",
+                              Header: LOCALE_STRING.brand,
                               accessor: "brand",
                               filterMethod: (filter, row) =>
                                   row[filter.id].includes(filter.value)
