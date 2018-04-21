@@ -26,3 +26,18 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+div:focus {
+  outline:none;
+}
+
+#main{
+  margin-top: 80px;
+}
+
+@media print{
+  @page { size: landscape; }
+  .container{
+    width: 1200px;
+  }
+}

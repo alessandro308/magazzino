@@ -49,6 +49,9 @@ class BrandSelector extends React.Component{
     var options;
     if(this.state.isLoaded){
       options = this.state.brands.map(row => {
+        if(row.name===this.props.selected){
+          return <option key={row.name+row.id} value={row.id} selected>{row.name}</option>;
+        }
         return <option key={row.name+row.id} value={row.id}>{row.name}</option>;
       })
     }else{
@@ -150,6 +153,7 @@ class AddProductForm extends React.Component {
               name="brand"
               label="Select a brand"
               id="brand"
+              selected={this.props.brand}
               />
           </form>
         );
