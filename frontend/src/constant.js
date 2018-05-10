@@ -1,7 +1,8 @@
-//const BASE_URL="https://www.parrucchieriestetiste.it/magazzino/db"; 
-const BASE_URL="http://localhost:8888";
+const BASE_URL="https://www.parrucchieriestetiste.it/magazzino/db"; 
+//const BASE_URL="http://localhost:8888";
 const locale_string = {
     name: "Nome",
+    shops: "Negozi",
     description : "Descrizione",
     barcode : "Codice a barre",
     shop1: "Terracina",
@@ -35,10 +36,13 @@ const locale_string = {
     go_checkout: "Termina il conto",
     completeOrder: "Completa l'ordine",
     orderCompleted: "Acquisto completato",
-    getIdClient: "Inserisci il numero della carta, se esiste",
+    getIdClient: "Fidelity Card Number",
     add_brand: "Aggiungi marca",
-    brand_added: "Marca aggiunta"
-
+    brand_added: "Marca aggiunta",
+    loading: "Caricamento",
+    per_cent_button20: "20%",
+    per_cent_button0: "0%",
+    sale: "Sconto"
 }
 
 exports.LOCALE_STRING = locale_string;

@@ -1,10 +1,233 @@
-DELETE FROM products
-                   WHERE p.barcode = '100'\nDELETE FROM products
-                   WHERE barcode = '100'\nDELETE FROM products
-                   WHERE barcode = '104'\nDELETE FROM products
-                   WHERE barcode = '11'\nDELETE FROM products
-                   WHERE barcode = '111'\nDELETE FROM products
-                   WHERE barcode = '113'\nDELETE FROM products
-                   WHERE barcode = '114'\nDELETE FROM products
-                   WHERE barcode = '128'\nDELETE FROM products
-                   WHERE barcode = '1'\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = ''\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = '1'\nUPDATE products SET shop1 = shop1 - 1 WHERE `barcode` = '1'\n
+SELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 20\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 30\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 30\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 20\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 0\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 10\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 20\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 30\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 40\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 50\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 60\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id AND shop1 <> 0 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 60\nSELECT p.name, p.description, p.initialPrice, p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+                    FROM products p, brands b
+                   WHERE p.brand = b.id 
+                   ORDER BY barcode ASC 
+                   LIMIT 10 OFFSET 60\n

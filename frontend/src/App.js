@@ -8,12 +8,15 @@ import "react-table/react-table.css";
 import {BASE_URL, LOCALE_STRING} from './constant';
 import { AddBrandModal } from './components/AddBrandModal';
 
+const APIToken = React.createContext("");
+
 class MagazzinoNavBar extends React.Component{ 
       constructor(props){
         super(props);
         this.navBarButtonHandler = (e) =>{
           this.props.buttonHandler(e.target.getAttribute("data-key"));
         }
+
       }
 
       render(){
@@ -121,12 +124,22 @@ class App extends Component {
   }
 
   requestData(pageSize, page, sorted, filtered){
-
+    console.log(filtered);
+    var filtered_without_all = [];
+    filtered.forEach(element => {
+      if(element.id === "shop1" || element.id === "shop2"){
+        if(element.value !== "all"){
+          filtered_without_all.push(element);
+        }
+      }else{
+        filtered_without_all.push(element);
+      }
+    });
     var payload = {
       start: page*pageSize,
       end: page*pageSize+pageSize,
       orderBy: sorted,
-      where: filtered
+      where: filtered_without_all
     }
     var url = `${BASE_URL}/api/getProducts?parameters=`+JSON.stringify(payload);
 
@@ -136,13 +149,15 @@ class App extends Component {
     })
     .then(
       (result) => {
+          console.log(result);
           var tableState = {...this.state.table}
           tableState.data = [];
-          
+          let shift = page*pageSize;
+          console.log("SHIFT "+(shift));
           for(let i = 0; i<result.items.length; i++){
-            tableState.data[i+page*pageSize] = result.items[i];
+            tableState.data[i+shift] = result.items[i];
           }
-          
+          console.log(tableState.data);
           tableState.pages = Math.ceil(result.numberOfItems / pageSize);
           tableState.loading = false;
           this.setState({table: {...tableState}});
@@ -162,11 +177,25 @@ class App extends Component {
       // You can set the `loading` prop of the table to true to use the built-in one or show you're own loading bar if you want.
       this.setState({ loading: true });
       // Request the data however you want.  Here, we'll use our mocked service we created earlier
-      this.requestData(
+      /*this.requestData(
         this.state.table.pageSize,
         this.state.table.page,
         this.state.table.sorted,
         this.state.table.filtered
+      );*/
+      fetch(encodeURI(`${BASE_URL}/api/getProducts`))
+      .then(res => {
+          return res.json();
+      })
+      .then(
+        (result) => {
+          let tableState = {...this.state.table}
+          tableState.data = result;
+          tableState.loading = false;
+          this.setState({
+            table: tableState
+          });
+        }
       );
   }
   
@@ -180,21 +209,28 @@ class App extends Component {
   render() {
     let cartComposer;
     let table;
-    var selectedShop;
     if(this.state.cartComposer){
       cartComposer = <CartComposer shop={this.state.shop}/>
     }else{
+      const filterMethod = function(filter, row){
+        if(filter.value === "NOT 0"){
+          return row[filter.id] > 0;
+        }
+        if(filter.value === "0"){
+          return row[filter.id] <= 0;
+        }
+        return true;
+      };
+      let selectedShop;
       switch(this.state.shop){
         case 0:
           selectedShop = {
-            Header: LOCALE_STRING.avaiability,
-            columns: [
+                Header: LOCALE_STRING.shops,
+                columns: [
                 {
                 Header: LOCALE_STRING.shop1,
                 accessor: "shop1",
-                filterMethod: (filter, row) => {
-                  return true;
-                },
+                filterMethod: filterMethod,
                 Filter: ({ filter, onChange }) =>
                     <select
                         onChange={event => onChange(event.target.value)}
@@ -209,9 +245,7 @@ class App extends Component {
                 {
                 Header: LOCALE_STRING.shop2,
                 accessor: "shop2",
-                filterMethod: (filter, row) => {
-                    return true;
-                },
+                filterMethod: filterMethod,
                 Filter: ({ filter, onChange }) =>
                     <select
                     onChange={event => onChange(event.target.value)}
@@ -228,14 +262,12 @@ class App extends Component {
           break;
         case 1:
           selectedShop = {
-            Header: LOCALE_STRING.shop1,
+            Header: LOCALE_STRING.shops,
             columns: [
                 {
                 Header: LOCALE_STRING.shop1,
                 accessor: "shop1",
-                filterMethod: (filter, row) => {
-                  return true;
-                },
+                filterMethod: filterMethod,
                 Filter: ({ filter, onChange }) =>
                     <select
                         onChange={event => onChange(event.target.value)}
@@ -252,14 +284,12 @@ class App extends Component {
           break;
         case 2:
           selectedShop = {
-            Header: LOCALE_STRING.shop2,
+            Header: LOCALE_STRING.shops,
             columns: [
                 {
                 Header: LOCALE_STRING.shop2,
                 accessor: "shop2",
-                filterMethod: (filter, row) => {
-                    return true;
-                },
+                filterMethod: filterMethod,
                 Filter: ({ filter, onChange }) =>
                     <select
                     onChange={event => onChange(event.target.value)}
@@ -342,49 +372,19 @@ class App extends Component {
               filterable
               defaultPageSize={10}
               className="-striped -highlight"
-              pages={this.state.table.pages}
-              // Controlled props
-              sorted={[]}
               pageSizeOptions={[5, 10, 20, 50, 100, 250, 500]}
-              page={this.state.table.page}
-              pageSize={this.state.table.pageSize}
-              filtered={this.state.table.filtered}
-              // Callbacks
-              onSortedChange={sorted => {
-                  const tableStatus = {...this.state.table};
-                  tableStatus.sorted = sorted;
-                  this.setState({ table: tableStatus }, this.fetchData );
-                }
-              }
-              onPageChange={page => {
-                  const tableStatus = {...this.state.table};
-                  tableStatus.page = page;
-                  this.setState({ table: tableStatus }, this.fetchData );
-                }
-              }
-              onPageSizeChange={(pageSize, page) => {
-                const tableStatus = {...this.state.table};
-                tableStatus.page = page;
-                tableStatus.pageSize = pageSize;
-                this.setState({ table: tableStatus }, this.fetchData );
-              }}
-              onFilteredChange={filtered => {
-                const tableStatus = {...this.state.table};
-                tableStatus.filtered = filtered;
-                this.setState({ table: tableStatus }, this.fetchData );
-              }
-            }
+              
             />
     }
     return (
-      <div>
-      <AddProductModal show={this.state.modalShow} hide={this.hideModal} />
-      <AddBrandModal show={this.state.addBrandModalShow} handleClose={this.brandModalCloseHandler} />
-      <MagazzinoNavBar buttonHandler={this.navBarButtonHandler} selected={this.state.shop}/>;
-      <div id="main" className="container">
-       {this.state.cartComposer ? cartComposer : table}
-      </div>
-      </div>
+      <React.Fragment>
+        <AddProductModal show={this.state.modalShow} hide={this.hideModal} />
+        <AddBrandModal show={this.state.addBrandModalShow} handleClose={this.brandModalCloseHandler} />
+        <MagazzinoNavBar buttonHandler={this.navBarButtonHandler} selected={this.state.shop}/>;
+          <div id="main" className="container">
+            {this.state.cartComposer ? cartComposer : table}
+          </div>
+      </React.Fragment>
     );
   }
 }

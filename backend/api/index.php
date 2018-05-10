@@ -22,9 +22,10 @@ Flight::route('GET /getProducts/', function(){
     }
 });
 
-Flight::route("GET /getProduct/", function(){
+Flight::route("GET /getProduct", function(){
     $db = Flight::get('db');
     $res = $db -> getProduct($_GET["barcode"]);
+    
     if(count($res)>0)
         Flight::json($res);
     else 
@@ -150,6 +151,28 @@ Flight::route("GET /addProduct/", function(){
 Flight::route("GET /getBrands", function(){
     $db = Flight::get('db');
     return Flight::json($db->getBrands());
+});
+
+Flight::route("POST|OPTIONS /addPoints", function(){
+    $db = Flight::get('db');
+    //Receive the RAW post data.
+    $content = trim(file_get_contents("php://input"));
+
+    $request = Flight::request();
+    if($request->method == "OPTIONS"){
+        echo "ok";
+        return;
+    }
+    //Attempt to decode the incoming RAW post data from JSON.
+    $_POST = json_decode($content, true);
+    require 'CardDb.php';
+    $db = new CardDb("/home/mhd/www.parrucchieriestetiste.it/htdocs/fidelity-cards/src/card_db");
+    if($db -> addPoints($_POST["cardNumber"], $_POST["points"]) >= 0)
+        echo "OK";
+    else{
+        Flight::error(new Exception("Card not found"));
+    }
+    return;
 });
 
 Flight::start();

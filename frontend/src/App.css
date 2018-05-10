@@ -31,6 +31,10 @@ div:focus {
   outline:none;
 }
 
+button:focus{
+  outline: none;
+}
+
 #main{
   margin-top: 80px;
 }
@@ -40,11 +44,6 @@ div:focus {
   .container{
     width: 1200px;
   }
-}
-
-#completeOrder{
-  margin: 0 auto;
-  width: 60%;
 }
 
 .align-right{

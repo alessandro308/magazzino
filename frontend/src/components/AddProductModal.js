@@ -18,8 +18,11 @@ class AddProductModal extends React.Component{
         shop2: 0,
         barcode: "",
         brand: 0,
-        barcodeExists: false
+        barcodeExists: false,
+        loading: false
       }
+
+      this.requestID = 0;
 
       this.handleClose = (button) => {
         this.props.hide(button);
@@ -47,9 +50,10 @@ class AddProductModal extends React.Component{
             wholesalePrice: 0,
             shop1: 0,
             shop2: 0,
-            barcode: barcode == null? "" : barcode,
+            barcode: barcode == null || typeof barcode !== "string" ? "" : barcode,
             brand: 0,
-            barcodeExists: false
+            barcodeExists: false,
+            loading: false
         });
       }
       this.addProductHandler = this.addProductHandler.bind(this);
@@ -58,7 +62,8 @@ class AddProductModal extends React.Component{
       this.tick = null;
     }
 
-    checkValue (barcode){
+    checkValue (barcode, _requestID){
+      this.setState({loading: true});
       fetch(`${BASE_URL}/api/getProduct?barcode=${barcode}`)
       .then(
         res => {
@@ -71,26 +76,29 @@ class AddProductModal extends React.Component{
       ).then(
         response => {
           const res = response[0];
-          this.setState(
-            {
-              name: res["name"],
-              description: res["description"],
-              initialPrice: res["initialPrice"],
-              finalPrice: res["finalPrice"],
-              wholesalePrice: res["wholesalePrice"],
-              shop1: res["shop1"],
-              shop2: res["shop2"],
-              barcode: res["barcode"],
-              barcodeExists: true,
-              brand: res["brand"]
-            }
-          )
+          if(this.requestID === _requestID) //Avoid to overrite the form with older requestes
+            this.setState(
+              {
+                name: res["name"],
+                description: res["description"],
+                initialPrice: res["initialPrice"],
+                finalPrice: res["finalPrice"],
+                wholesalePrice: res["wholesalePrice"],
+                shop1: res["shop1"],
+                shop2: res["shop2"],
+                barcode: res["barcode"],
+                barcodeExists: true,
+                brand: res["brand_id"],
+                loading: false
+              }
+            )
 
         }
       ).catch( e => {
         if(this.state.barcodeExists){
           this.resetState(this.state.barcode);
         }
+        this.setState({loading: false});
       });
     }
 
@@ -100,8 +108,8 @@ class AddProductModal extends React.Component{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        if(name === "barcode"){
-          this.checkValue(value);
+        if(name === "barcode" && (value.length === 8 || value.length === 13)){
+          this.checkValue(value, ++this.requestID);
         }
         this.setState(
             {
@@ -156,7 +164,6 @@ class AddProductModal extends React.Component{
     }
     
     componentDidMount(){
-      this.resetState();
     }
 
 
@@ -188,10 +195,10 @@ class AddProductModal extends React.Component{
 
       var deleteButton;
       if(this.state.barcodeExists){
-        deleteButton = <Button bsStyle="danger" className="pull-left" onClick={this.deleteButtonHandler}>Delete</Button>
+        deleteButton = <Button disabled={this.state.loading} bsStyle="danger" className="pull-left" onClick={this.deleteButtonHandler}>Delete</Button>
       }
       return (<div className="static-modal">
-        <Modal show={this.props.show} onHide={this.handleClose}>
+        <Modal show={this.props.show} onHide={this.handleClose} onEntering={this.resetState}>
             <Modal.Header closeButton>
               <Modal.Title>{this.state.barcodeExists ? LOCALE_STRING.change_product : LOCALE_STRING.add_product}</Modal.Title>
             </Modal.Header>
@@ -216,7 +223,7 @@ class AddProductModal extends React.Component{
           <Modal.Footer>
             <Button onClick={this.handleClose}>Close</Button>
             {deleteButton}
-            <Button bsStyle={this.state.barcodeExists ? "warning" : "primary"} onClick={this.addProductHandler}>{this.state.barcodeExists ? LOCALE_STRING.change_product: LOCALE_STRING.add_product}</Button>
+            <Button disabled={this.state.loading} bsStyle={this.state.barcodeExists ? "warning" : "primary"} onClick={this.addProductHandler}>{this.state.loading? LOCALE_STRING.loading : (this.state.barcodeExists ? LOCALE_STRING.change_product: LOCALE_STRING.add_product) }</Button>
           </Modal.Footer>
         </Modal>
       </div>);

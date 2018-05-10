@@ -26,7 +26,7 @@ class Database extends mysqli{
     }
 
     function getProduct($barcode){
-        $query = "SELECT p.name, p.description, p.initialPrice,p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, p.shop1, p.shop2 
+        $query = "SELECT p.name, p.description, p.initialPrice,p.wholesalePrice, p.finalPrice, p.barcode, b.name AS brand, b.id AS brand_id, p.shop1, p.shop2 
                     FROM products as p, brands as b
                    WHERE p.brand = b.id && p.barcode = '$barcode'
                 ORDER BY p.name";
@@ -79,7 +79,10 @@ class Database extends mysqli{
                    $where 
                    $sorting
                    LIMIT $diff OFFSET $start";
-        
+        $myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
+        $txt = $query.'\n';
+        fwrite($myfile, $txt);
+        fclose($myfile);
         return $this -> queryJSON($query);
     }
 
@@ -101,10 +104,7 @@ class Database extends mysqli{
 
     function decrease($barcode, $shop){
         $query = "UPDATE products SET $shop = $shop - 1 WHERE `barcode` = '$barcode'";
-        $myfile = fopen("newfile.txt", "a") or die("Unable to open file!");
-        $txt = $query.'\n';
-        fwrite($myfile, $txt);
-        fclose($myfile);
+        
         if($this -> query($query)){
             return true;
         }else{
